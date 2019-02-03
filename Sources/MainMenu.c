@@ -1,13 +1,12 @@
 #include "MainMenu.h"
 #include "Engine.h"
-#include <stdio.h>
-
 #include "TextureManager.h"
 #include "SpriteManager.h"
 #include "TextManager.h"
 #include "Consts.h"
-#include "stdlib.h"
 
+#include <stdlib.h>
+#include <stdio.h>
 typedef enum
 {
 	BG_SPRITE,

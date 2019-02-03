@@ -1,4 +1,5 @@
 #include "TextManager.h"
+
 #include<stdlib.h>
 #include<stdio.h>
 
