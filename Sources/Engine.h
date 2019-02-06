@@ -46,8 +46,8 @@ typedef struct _Engine
 	int* sceneInfo;
 	sfContextSettings windowsSettings;
 
-	bool isLeftMouseButtonRelased;
-	bool isRightMouseButtonRelased;
+	bool isLeftMouseButtonReleased;
+	bool isRightMouseButtonReleased;
 	bool wasRightMouseButtonPressed;
 	bool wasLeftMouseButtonPressed;
 

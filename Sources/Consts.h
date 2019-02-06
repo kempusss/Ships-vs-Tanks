@@ -1,8 +1,10 @@
 #ifndef CONSTS_H
 #define CONSTS_H
 
+#include<SFML/Window.h>
+
 #define WINDOW_WIDTH 1280
-#define WINDOW_HEIGHT 720
+#define WINDOW_HEIGHT 704
 #define TILE_SIZE 64
 #define PROJECTILE_SIZE 16
 #define MAP_TILE_SIZE (TILE_SIZE/2.f)
@@ -15,9 +17,15 @@
 #define ENEMY_SCALE 0.75f
 #define PROJECTILE_SCALE 1.f
 #define PROJECTILE_DESTROY_DISTANCE 30.f
-#define WAVE_SPAWN_WAIT 20.f
 #define SHIP_SPAWN_WAIT 0.9f
 #define KILL_GOLD 5
 
+/*
+#define TURRET1_KEY sfKeyNum1
+#define TURRET2_KEY sfKeyNum2
+#define TURRET3_KEY	sfKeyNum3
+#define SELL_KEY	sfKeyQ
+#define UPGRADE_KEY	sfKeyW
+#define CHECK_KEY	sfKeyE*/
 
 #endif

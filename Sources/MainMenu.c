@@ -17,7 +17,7 @@ typedef enum
 
 void MainMenu_update(Engine* engine)
 {
-	if(engine->isLeftMouseButtonRelased)
+	if(engine->isLeftMouseButtonReleased)
 	{
 		sfVector2i mousePosition = sfMouse_getPositionRenderWindow(engine->window);
 

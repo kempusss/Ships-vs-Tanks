@@ -12,7 +12,7 @@ ProjectileManager* ProjectileManager_create()
 	return manager;
 }
 
-ProjectileNode* ProjectileManager_createNode(ProjectileManager* manager, SpriteManager* spriteMan, TextureManager* texMan)
+ProjectileNode* ProjectileManager_createNode(ProjectileManager* manager, SpriteManager* spriteMan, TextureManager* texMan, int type)
 {
 	ProjectileNode* newNode = malloc(sizeof(ProjectileNode));
 	newNode->next = NULL;
@@ -29,7 +29,7 @@ ProjectileNode* ProjectileManager_createNode(ProjectileManager* manager, SpriteM
 	newNode->onTarget = false;
 
 	sfSprite_setTexture(newNode->sprite, TextureManager_getTexture(texMan, PROJECTILES), sfTrue);
-	sfIntRect texturePosition = {0,0, PROJECTILE_SIZE, PROJECTILE_SIZE};
+	sfIntRect texturePosition = {0,type*PROJECTILE_SIZE, PROJECTILE_SIZE, PROJECTILE_SIZE};
 	sfSprite_setTextureRect(newNode->sprite, texturePosition);
 	centerSpriteOrigin(newNode->sprite);
 

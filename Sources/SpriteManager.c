@@ -19,6 +19,7 @@ SpriteNode*  SpriteManager_createNode(SpriteManager* manager)
 	newNode->data = sfSprite_create();
 	newNode->next = NULL;
 	newNode->id = manager->idCounter++;
+	newNode->canContain = 1;
 	
 	if(manager->listBegin == NULL)
 	{
@@ -60,7 +61,7 @@ SpriteNode*  SpriteManager_getNodeContaining(SpriteManager*manager, int x, int y
 	while(node!= NULL)
 	{
 		sfFloatRect bound = sfSprite_getGlobalBounds(node->data);
-		if(sfFloatRect_contains(&bound, x,y))
+		if(node->canContain && sfFloatRect_contains(&bound, x,y))
 		{
 			printf("finded sprite on position: %d %d\n", x, y );
 			return node;

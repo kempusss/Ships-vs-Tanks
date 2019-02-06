@@ -26,6 +26,7 @@ typedef struct _WaveManager
 
 	int** waves;
 	int* waveSize;
+	int* waveSpawnWait;
 
 	int currentLvlStatus;
 	int currentGold;

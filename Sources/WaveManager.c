@@ -46,10 +46,16 @@ void WaveManager_loadFromFile(WaveManager* manager, const char* filePath)
 
 	manager->waves = malloc(sizeof(int*) * manager->wavesAmount);
 	manager->waveSize = malloc(sizeof(int) * manager->wavesAmount);
+	manager->waveSpawnWait = malloc(sizeof(int) * manager->wavesAmount);
 
 	for(int i= 0; i < manager->wavesAmount; ++i)
 	{
 		if(!fscanf(data, "%d", &manager->waveSize[i]))
+		{
+			ERR_PRN
+			exit(0);
+		}
+		if(!fscanf(data, "%d", &manager->waveSpawnWait[i]))
 		{
 			ERR_PRN
 			exit(0);
@@ -85,10 +91,10 @@ void WaveManager_update(WaveManager* manager, float deltaTime, MapManager* mapMa
 
 		++j;
 		if(j == manager->waveSize[i])
-		{
+		{			
+			manager->timeToSpawn = manager->waveSpawnWait[i];
 			j = 0;
 			i++;
-			manager->timeToSpawn = WAVE_SPAWN_WAIT;
 		}
 		else
 			manager->timeToSpawn = SHIP_SPAWN_WAIT;
@@ -125,5 +131,6 @@ void WaveManager_destroy(WaveManager* manager)
 	}
 	free(manager->waves);
 	free(manager->waveSize);
+	free(manager->waveSpawnWait);
 	free(manager);
 }

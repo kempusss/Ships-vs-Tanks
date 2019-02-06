@@ -5,6 +5,11 @@
 #include <stdlib.h>
 #include <math.h>
 
+static const int dmg[3] = {15,24,32};
+static const float reloadTime[3] = {0.5f, 0.75f,1.f};
+static const float range[3] = {200.f,300.f,400.f};
+static const int cost[3] = {20,25,30};
+
 
 TurretManager* TurretManager_create()
 {
@@ -15,7 +20,7 @@ TurretManager* TurretManager_create()
 	return manager;
 }
 
-TurretNode* TurretManager_createNode(TurretManager* manager, SpriteManager* spriteMan, TextureManager* texMan)
+TurretNode* TurretManager_createNode(TurretManager* manager, SpriteManager* spriteMan, TextureManager* texMan, int type)
 {
 	TurretNode* newNode = malloc(sizeof(TurretNode));
 	newNode->next = NULL;
@@ -26,13 +31,14 @@ TurretNode* TurretManager_createNode(TurretManager* manager, SpriteManager* spri
 
 	newNode->sprite = spriteNode->data;
 	newNode->spriteId = spriteNode->id;
-	newNode->range = 200.f;
-	newNode->dmg = 25;
-	newNode->reloadTime = newNode->timeToShot = 1.f;
+	newNode->range = range[type];
+	newNode->dmg = dmg[type];
+	newNode->reloadTime = newNode->timeToShot = reloadTime[type];
+	newNode->type = type;
 
 	sfSprite_setTexture(newNode->sprite, TextureManager_getTexture(texMan, TANKS), sfTrue);
 
-	sfIntRect texturePosition = {0,0, TILE_SIZE, TILE_SIZE};
+	sfIntRect texturePosition = {0,type*TILE_SIZE, TILE_SIZE, TILE_SIZE};
 	sfSprite_setTextureRect(newNode->sprite, texturePosition);
 	centerSpriteOrigin(newNode->sprite);
 
@@ -117,7 +123,7 @@ static void updateNode(TurretNode* turret, float deltaTime, EnemyManager* enemyM
 		{
 			printf("Shooting\n");
 			turret->timeToShot = turret->reloadTime;
-			ProjectileNode* projectile = ProjectileManager_createNode(projectileMan, spriteMan, textureMan);
+			ProjectileNode* projectile = ProjectileManager_createNode(projectileMan, spriteMan, textureMan, turret->type);
 			projectile->targetId = enemy->id;
 			projectile->dmg = turret->dmg;
 			//speed
@@ -198,4 +204,10 @@ void TurretManager_destroy(TurretManager* manager, SpriteManager* spriteMan)
 	printf("destroying Turret manager\n");
 	TurretManager_destroyAllNodes(manager, spriteMan);
 	free(manager);
+}
+
+
+int getTurretCost(int type)
+{
+	return cost[type];
 }

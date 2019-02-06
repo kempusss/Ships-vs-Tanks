@@ -2,10 +2,12 @@
 #define SPRITE_MANAGER_H
 
 #include<SFML/Graphics.h>
+#include <stdbool.h>
 
 typedef struct _SpriteNode
 {
 	int id;
+	bool canContain;
 	sfSprite* data;
 	struct _SpriteNode *next, *prev;
 } SpriteNode;
@@ -19,6 +21,7 @@ typedef struct _SpriteManager
 SpriteManager* SpriteManager_create();
 SpriteNode* SpriteManager_createNode(SpriteManager* manager);
 
+SpriteNode* SpriteManager_getNodeContaining(SpriteManager* manager, int x, int y);
 SpriteNode* SpriteManager_getNode(SpriteManager* manager, int id);
 
 void SpriteManager_draw(SpriteManager* manager, sfRenderWindow* window);

@@ -63,8 +63,8 @@ Engine* Engine_create()
 
   	eng->wasRightMouseButtonPressed = 0;
   	eng->wasLeftMouseButtonPressed = 0;
-  	eng->isRightMouseButtonRelased = 0;
-  	eng->isLeftMouseButtonRelased = 0;
+  	eng->isRightMouseButtonReleased = 0;
+  	eng->isLeftMouseButtonReleased = 0;
 
   	eng->isActive = 1;
 	return eng;
@@ -104,17 +104,17 @@ static void checkMouseButtons(Engine* engine)
 	//printf("ASDS\n");
     if(!sfMouse_isButtonPressed(sfMouseRight) && engine->wasRightMouseButtonPressed)
     {
-    	engine->isRightMouseButtonRelased = 1;
+    	engine->isRightMouseButtonReleased = 1;
     }
     else
-    	engine->isRightMouseButtonRelased = 0;
+    	engine->isRightMouseButtonReleased = 0;
 
      if(!sfMouse_isButtonPressed(sfMouseLeft) && engine->wasLeftMouseButtonPressed)
     {	
-    	engine->isLeftMouseButtonRelased = 1;
+    	engine->isLeftMouseButtonReleased = 1;
     }
     else
-    	engine->isLeftMouseButtonRelased = 0;
+    	engine->isLeftMouseButtonReleased = 0;
 
     engine->wasLeftMouseButtonPressed = sfMouse_isButtonPressed(sfMouseLeft);
     engine->wasRightMouseButtonPressed = sfMouse_isButtonPressed(sfMouseRight);

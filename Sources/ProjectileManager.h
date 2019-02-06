@@ -27,7 +27,7 @@ typedef struct _ProjectileManager
 } ProjectileManager;
 
 ProjectileManager* ProjectileManager_create();
-ProjectileNode* ProjectileManager_createNode(ProjectileManager* manager, SpriteManager* spriteMan, TextureManager* texMan);
+ProjectileNode* ProjectileManager_createNode(ProjectileManager* manager, SpriteManager* spriteMan, TextureManager* texMan, int type);
 
 void ProjectileManager_update(ProjectileManager* manager, float deltaTime, EnemyManager* enemyMan);
 
