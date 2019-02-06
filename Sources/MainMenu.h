@@ -3,6 +3,6 @@
 
 #include "Engine.h"
 
-void MainMenu_update(Engine* engine, float deltaTime);
+void MainMenu_update(Engine* engine);
 void MainMenu_init(Engine* engine);
 #endif

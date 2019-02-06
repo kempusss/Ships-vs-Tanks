@@ -8,6 +8,11 @@
 #include "TextManager.h"
 #include "MapManager.h"
 #include "EnemyManager.h"
+#include "TurretManager.h"
+#include "ProjectileManager.h"
+#include "WaveManager.h"
+
+#include <stdbool.h>
 
 typedef enum
 {
@@ -30,13 +35,21 @@ typedef struct _Engine
 
 
 	EnemyManager* enemyManager;
-	//TurretManager* turretManager;
+	TurretManager* turretManager;
 	MapManager* mapManager;
+	ProjectileManager* projectileManager;
+	WaveManager* waveManager;
 
 	sfFont* font;
 	sfClock* clock;
 
 	int* sceneInfo;
+	sfContextSettings windowsSettings;
+
+	bool isLeftMouseButtonRelased;
+	bool isRightMouseButtonRelased;
+	bool wasRightMouseButtonPressed;
+	bool wasLeftMouseButtonPressed;
 
 } Engine;
 

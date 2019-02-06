@@ -44,7 +44,7 @@ TextNode* TextManager_getNode(TextManager* manager, int id)
 	{
 		if(node->id == id)
 		{
-			printf("finded text with id = %d\n",id );
+			//printf("finded text with id = %d\n",id );
 			return node;
 		}
 		node = node->next;

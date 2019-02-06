@@ -5,6 +5,8 @@
 #include <stdlib.h>
 #include <math.h>
 
+#define ERR_PRN printf("LOADING MAP FAILED\n");
+
 typedef enum
 {
 	WATER_TILE,
@@ -42,7 +44,11 @@ void MapManager_loadFromFile(MapManager* manager, const char* filePath)
 		for(int x= 0; x < MAP_WIDTH; ++x)
 		{
 			int val;
-			fscanf(data, "%d", &val);
+			if(!fscanf(data, "%d", &val))
+			{
+				ERR_PRN
+				exit(1);
+			}
 			printf("%d ", val);
 
 			for(int i= 0;i < 4; ++i)
@@ -51,11 +57,23 @@ void MapManager_loadFromFile(MapManager* manager, const char* filePath)
 		printf("\n");
 	}
 
-	fscanf(data, "%d %d", &manager->startCellPosition.x, &manager->startCellPosition.y);
-	fscanf(data, "%f", &manager->startRotation);
+	if(!fscanf(data, "%d %d", &manager->startCellPosition.x, &manager->startCellPosition.y))
+	{
+		ERR_PRN
+		exit(1);
+	}
+
+	if(!fscanf(data, "%f", &manager->startRotation))
+	{
+		ERR_PRN
+		exit(1);
+	}
 	manager->startRotation *= 90;
-	fscanf(data, "%d %d", &manager->endCellPosition.x, &manager->endCellPosition.y);
-	fscanf(data, "%d", &manager->maxShipPass);
+	if(!fscanf(data, "%d %d", &manager->endCellPosition.x, &manager->endCellPosition.y))
+	{
+		ERR_PRN
+		exit(1);
+	}
 
 	fclose(data);
 }
@@ -87,9 +105,9 @@ static void setTile(sfSprite* sprite, int leftID, int cornerID, int topID, int m
 	sfTexture* texture = TextureManager_getTexture(textMan, textureId);
 	sfSprite_setTexture(sprite,texture, sfTrue);
 
-	int textureAmount = sfTexture_getSize(texture).x / TILE_SIZE;
+	int textureAmount = sfTexture_getSize(texture).x / (MAP_TILE_SIZE);
 	int textureVersion = rand() % textureAmount;
-	sfIntRect texturePosition = {textureVersion * TILE_SIZE, myId * TILE_SIZE, TILE_SIZE, TILE_SIZE};
+	sfIntRect texturePosition = {textureVersion * MAP_TILE_SIZE, myId * MAP_TILE_SIZE, MAP_TILE_SIZE, MAP_TILE_SIZE};
 	sfSprite_setTextureRect(sprite, texturePosition);	
 }
 
@@ -101,7 +119,6 @@ void MapManager_createMapTiles(MapManager* manager, SpriteManager* spriteMan, Te
 	const int dY[] = {0, -1,-1,-1, 0, 1, 1, 1,};
 	const int tileDX[] = {0,1,1,0};//ofsset of sprite position
 	const int tileDY[] = {0,0,1,1};
-	const sfVector2f scale={DEFAULT_SCALE, DEFAULT_SCALE};
 
 	for(int y = 0;y<MAP_HEIGHT; ++y)
 	{
@@ -111,7 +128,6 @@ void MapManager_createMapTiles(MapManager* manager, SpriteManager* spriteMan, Te
 			{
 				SpriteNode* node = SpriteManager_createNode(spriteMan);
 				manager->cellSpriteId[y][x][i] = node->id;
-				sfSprite_setScale(node->data, scale);
 
 				if(manager->cellType[y][x] == WATER_TILE)
 				{
@@ -125,9 +141,9 @@ void MapManager_createMapTiles(MapManager* manager, SpriteManager* spriteMan, Te
 					{
 						temp[j] = getCellType(manager, x + dX[(2*i+j)%8], y + dY[(2*i+j)%8]);
 					}
+
 					setTile(node->data, temp[0], temp[1], temp[2], i, textMan);	
 				}
-
 				sfVector2f pos ={x*TILE_SIZE + tileDX[i]* TILE_SIZE/2, y*TILE_SIZE + tileDY[i] * TILE_SIZE/2};
 				sfSprite_setPosition(node->data, pos);
 			}
@@ -209,6 +225,8 @@ void MapManager_createPathDirections(MapManager* manager)
 	}
 }
 
+
+
 float MapManager_getRotation(MapManager* manager, int x, int y)
 {
 	int cellType = getCellType(manager, x, y);
@@ -225,7 +243,6 @@ void MapManager_clearMap(MapManager* manager, SpriteManager* spriteMan)
 		{
 			for(int i = 0; i < 4; ++i)
 			{
-
 				SpriteManager_destroyNode(spriteMan, manager->cellSpriteId[y][x][i]);
 				manager->cellSpriteId[y][x][i] = -1;
 			}
@@ -248,5 +265,5 @@ int toMapCoordinates(float pixels)
 }
 float toPixels(int mapCordinate)
 {
-	return mapCordinate * TILE_SIZE + TILE_SIZE/2.f;
+	return mapCordinate * TILE_SIZE + MAP_TILE_SIZE;
 }

@@ -18,6 +18,7 @@ void TextureManager_loadTexture(TextureManager* manager, TextureNames name, cons
 	if(name < 0 || name >= TEXTURE_COUNT)
 	{
 		printf("wrong texture name");
+		exit(1);
 		return;
 	}
 	if(manager->textures[name] != NULL)
@@ -35,11 +36,13 @@ sfTexture* TextureManager_getTexture(TextureManager* manager, TextureNames name)
 	if(name < 0 || name >= TEXTURE_COUNT)
 	{
 		printf("wrong texture name");
+		exit(1);
 		return NULL;
 	}
 	if(manager->textures[name] == NULL)
 	{
 		printf("texture is not loaded\n");
+		exit(1);
 		return NULL;
 	}
 	return manager->textures[name];

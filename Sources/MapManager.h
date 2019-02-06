@@ -24,9 +24,11 @@ void MapManager_loadFromFile(MapManager* manager, const char* filePath);
 void MapManager_createMapTiles(MapManager* manager, SpriteManager* spriteMan, TextureManager* textMan);
 void MapManager_createPathDirections(MapManager* manager); //require map tiles to be corectly placed
 
+
 sfVector2f MapManager_getStartPosition(MapManager* manager);
 float MapManager_getRotation(MapManager* manager, int x, int y);
 
+void MapManager_clearMap(MapManager* manager, SpriteManager* spriteMan);
 void MapManager_destroy(MapManager* manager, SpriteManager* spriteMan);
 
 int toMapCoordinates(float pixels);

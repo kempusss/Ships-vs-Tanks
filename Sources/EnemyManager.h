@@ -25,9 +25,11 @@ typedef struct _EnemyManager
 } EnemyManager;
 
 EnemyManager* EnemyManager_create();
-EnemyNode* EnemyManager_createNode(EnemyManager* manager, SpriteManager* spriteMan, TextureManager* texMan, MapManager* mapMan);
+EnemyNode* EnemyManager_createNode(EnemyManager* manager, SpriteManager* spriteMan, TextureManager* texMan, MapManager* mapMan, int type);
 
 EnemyNode* EnemyManager_getNode(EnemyManager* manager, int id);
+EnemyNode* EnemyManager_getNodeContaining(EnemyManager* manager, int x, int y);
+EnemyNode* EnemyManager_getClosestInRadius(EnemyManager* manager, float x, float y, float radius);
 
 void EnemyManager_update(EnemyManager* manager, float deltaTime, MapManager* mapMan);
 

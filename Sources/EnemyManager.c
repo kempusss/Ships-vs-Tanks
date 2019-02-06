@@ -3,6 +3,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+
+static const int maxHp[3] = {75, 110, 175};
+static const int speed[3] = {100, 75, 50};
+
 EnemyManager* EnemyManager_create()
 {
 	EnemyManager* manager = malloc(sizeof(EnemyManager));
@@ -12,7 +16,7 @@ EnemyManager* EnemyManager_create()
 	return manager;
 }
 
-EnemyNode*  EnemyManager_createNode(EnemyManager* manager, SpriteManager* spriteMan, TextureManager* texMan, MapManager* mapMan)
+EnemyNode*  EnemyManager_createNode(EnemyManager* manager, SpriteManager* spriteMan, TextureManager* texMan, MapManager* mapMan, int type)
 {
 	EnemyNode* newNode = malloc(sizeof(EnemyNode));
 	newNode->next = NULL;
@@ -20,30 +24,25 @@ EnemyNode*  EnemyManager_createNode(EnemyManager* manager, SpriteManager* sprite
 
 
 	SpriteNode* spriteNode = SpriteManager_createNode(spriteMan);
-	if(spriteNode == NULL)
-	{
-		printf("ERROR, no sprite\n");
-		return NULL;
-	}
 
 	newNode->sprite = spriteNode->data;
 	newNode->spriteId = spriteNode->id;
-	newNode->maxHp = newNode->currentHp = 100;
-	newNode->speed = 200;
+	newNode->maxHp = newNode->currentHp = maxHp[type];
+	newNode->speed = speed[type];
 
-	sfSprite_setTexture(newNode->sprite, TextureManager_getTexture(texMan, SHIP), sfTrue);
-	sfIntRect texturePosition = {0,0,TILE_SIZE,TILE_SIZE*2};
+	sfVector2f scale ={ENEMY_SCALE, ENEMY_SCALE};
+	sfSprite_setScale(newNode->sprite, scale);
+
+	sfSprite_setTexture(newNode->sprite, TextureManager_getTexture(texMan, SHIPS), sfTrue);
+	sfIntRect texturePosition = {0,type*TILE_SIZE*2,TILE_SIZE,TILE_SIZE*2};
 	sfSprite_setTextureRect(newNode->sprite, texturePosition);
 	centerSpriteOrigin(newNode->sprite);
-
-	sfVector2f scale = {DEFAULT_SCALE, DEFAULT_SCALE};
-	sfSprite_setScale(newNode->sprite, scale);
 
 	sfVector2f position = {toPixels(mapMan->startCellPosition.x), toPixels(mapMan->startCellPosition.y)};
 	sfSprite_setPosition(newNode->sprite, position);
 
 	sfSprite_setRotation(newNode->sprite, mapMan->startRotation);
-
+ 
 
 
 	if(manager->listBegin == NULL)
@@ -60,6 +59,31 @@ EnemyNode*  EnemyManager_createNode(EnemyManager* manager, SpriteManager* sprite
 	}
 
 	return newNode;
+}
+
+EnemyNode* EnemyManager_getClosestInRadius(EnemyManager* manager, float x, float y, float radius)
+{
+	EnemyNode* node = manager->listBegin;
+	EnemyNode* res = NULL;
+	float currentMin = 0;
+	float radiusSquared = radius*radius;
+
+	while(node!= NULL)
+	{
+		sfVector2f position = sfSprite_getPosition(node->sprite);
+		float dX = x - position.x;
+		float dY = y - position.y;
+		float distanceSquared = dX*dX + dY*dY;
+		if(distanceSquared < radiusSquared && (res == NULL || distanceSquared < currentMin))
+		{
+			res = node;
+			currentMin = distanceSquared;
+		}
+
+		node = node->next;
+	}
+
+	return res;
 }
 
 EnemyNode* EnemyManager_getNode(EnemyManager* manager, int id)
@@ -144,7 +168,16 @@ static void updateNode(EnemyNode* enemy, float deltaTime, MapManager* mapMan)
 	float rotation = MapManager_getRotation(mapMan, toMapCoordinates(position.x), toMapCoordinates(position.y));
 	updatePosition(enemy, rotation, position, deltaTime);
 
-	enemy->currentHp--;	
+}
+
+void EnemyManager_update(EnemyManager* manager, float deltaTime, MapManager* mapMan)
+{
+	EnemyNode* node  = manager->listBegin;
+	while(node != NULL)
+	{
+		updateNode(node, deltaTime, mapMan);
+		node = node->next;
+	}
 }
 
 static void destroyNode (EnemyManager* manager, EnemyNode* node, SpriteManager* spriteMan)
@@ -169,16 +202,6 @@ static void destroyNode (EnemyManager* manager, EnemyNode* node, SpriteManager* 
 
 	SpriteManager_destroyNode(spriteMan, node->spriteId);
 	free(node);
-}
-
-void EnemyManager_update(EnemyManager* manager, float deltaTime, MapManager* mapMan)
-{
-	EnemyNode* node  = manager->listBegin;
-	while(node != NULL)
-	{
-		updateNode(node, deltaTime, mapMan);
-		node = node->next;
-	}
 }
 
 int EnemyManager_destroyOnPosition(EnemyManager* manager, sfVector2i position, SpriteManager* spriteMan)
@@ -241,7 +264,10 @@ void EnemyManager_destroyAllNodes(EnemyManager* manager, SpriteManager* spriteMa
 	while(node != NULL)
 	{
 		EnemyNode* nex = node->next;
-		SpriteManager_destroyNode(spriteMan, node->spriteId);
+
+		if(spriteMan != NULL)
+			SpriteManager_destroyNode(spriteMan, node->spriteId);
+
 		free(node);
 		node = nex;
 	}

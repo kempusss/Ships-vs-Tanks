@@ -19,7 +19,7 @@ SpriteNode*  SpriteManager_createNode(SpriteManager* manager)
 	newNode->data = sfSprite_create();
 	newNode->next = NULL;
 	newNode->id = manager->idCounter++;
-
+	
 	if(manager->listBegin == NULL)
 	{
 		manager->listLast = newNode;

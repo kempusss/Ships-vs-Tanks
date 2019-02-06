@@ -15,9 +15,9 @@ typedef enum
 	OBJECTS_COUNT	
 } ObjectsId;
 
-void MainMenu_update(Engine* engine, float deltaTime)
+void MainMenu_update(Engine* engine)
 {
-	if(sfMouse_isButtonPressed(sfMouseLeft))
+	if(engine->isLeftMouseButtonRelased)
 	{
 		sfVector2i mousePosition = sfMouse_getPositionRenderWindow(engine->window);
 
@@ -39,10 +39,6 @@ void MainMenu_update(Engine* engine, float deltaTime)
 }
 void MainMenu_init(Engine* engine)
 {
-	free(engine->sceneInfo);
-	SpriteManager_destroyAllNodes(engine->spriteManager);
-	TextManager_destroyAllNodes(engine->textManager);
-	EnemyManager_destroyAllNodes(engine->enemyManager, engine->spriteManager);
 
 	TextureManager_loadTexture(engine->textureManager, BACKGROUND, "Assets/background.png");
 	
