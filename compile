@@ -1,3 +1,0 @@
-gcc Sources/*.c -Wextra -Wall -O2 -std=c11 -lcsfml-graphics -lcsfml-window -lcsfml-system -lcsfml-audio -lm -o game.e
-
-
