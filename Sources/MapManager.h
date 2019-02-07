@@ -4,6 +4,7 @@
 #include "Consts.h"
 #include "SpriteManager.h"
 #include "TextureManager.h"
+#include <stdbool.h>
 
 typedef struct _MapManager
 {
@@ -24,7 +25,7 @@ void MapManager_loadFromFile(MapManager* manager, const char* filePath);
 void MapManager_createMapTiles(MapManager* manager, SpriteManager* spriteMan, TextureManager* textMan);
 void MapManager_createPathDirections(MapManager* manager); //require map tiles to be corectly placed
 
-
+bool MapManager_isLand(MapManager* manager, int x, int y);
 sfVector2f MapManager_getStartPosition(MapManager* manager);
 float MapManager_getRotation(MapManager* manager, int x, int y);
 

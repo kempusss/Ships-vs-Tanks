@@ -20,6 +20,7 @@ SpriteNode*  SpriteManager_createNode(SpriteManager* manager)
 	newNode->next = NULL;
 	newNode->id = manager->idCounter++;
 	newNode->canContain = 1;
+	newNode->layer = 0;
 	
 	if(manager->listBegin == NULL)
 	{
@@ -41,6 +42,9 @@ SpriteNode* SpriteManager_getNode(SpriteManager* manager, int id)
 {
 	SpriteNode* node = manager->listBegin;
 
+	if(id < 0)
+		return NULL;
+	
 	while(node!= NULL)
 	{
 		if(node->id == id)
@@ -73,13 +77,14 @@ SpriteNode*  SpriteManager_getNodeContaining(SpriteManager*manager, int x, int y
 
 }
 
-void SpriteManager_draw(SpriteManager* manager, sfRenderWindow* window)
+void SpriteManager_draw(SpriteManager* manager, sfRenderWindow* window, int layer)
 {
 	SpriteNode* node = manager->listBegin;
 
 	while(node != NULL)
 	{
-		sfRenderWindow_drawSprite(window, node->data, NULL);
+		if(node->layer == layer)
+			sfRenderWindow_drawSprite(window, node->data, NULL);
 		node = node->next;
 	}
 }
@@ -139,9 +144,9 @@ void SpriteManager_destroy(SpriteManager* manager)
 	free(manager);
 }
 
-void centerSpriteOrigin(sfSprite * text)
+void centerSpriteOrigin(sfSprite * sprite)
 {
-	sfFloatRect rect= sfSprite_getLocalBounds(text);
+	sfFloatRect rect= sfSprite_getLocalBounds(sprite);
 	sfVector2f center = {rect.width/2, rect.height/2};
-	sfSprite_setOrigin(text, center);
+	sfSprite_setOrigin(sprite, center);
 }

@@ -36,7 +36,7 @@ void MapManager_loadFromFile(MapManager* manager, const char* filePath)
 	if(data == NULL)
 	{
 		printf("map file path is incorrect\n");
-		return;
+		exit(1);
 	}
 
 	for(int y =0;y<MAP_HEIGHT; ++y)
@@ -225,7 +225,10 @@ void MapManager_createPathDirections(MapManager* manager)
 	}
 }
 
-
+bool MapManager_isLand(MapManager* manager, int x, int y)
+{
+	return getCellType(manager,x,y) == LAND_TILE && x < MAP_WIDTH && x >= 0 && y < MAP_HEIGHT && y >= 0;
+}
 
 float MapManager_getRotation(MapManager* manager, int x, int y)
 {

@@ -21,6 +21,8 @@ Engine* Engine_create()
 	eng->nextState = MAIN_MENU;	
 	eng->sceneInfo = NULL;
 
+  eng->mapPath = eng->wavePath = "";
+
   	/* Create the main window */
  	sfVideoMode mode = {
    		WINDOW_WIDTH,
@@ -194,8 +196,11 @@ void Engine_draw(Engine* engine)
 	sfRenderWindow_clear(engine->window, sfBlack);
 
 	//draw all the stuff here
-	SpriteManager_draw(engine->spriteManager, engine->window);	
-	TextManager_draw(engine->textManager, engine->window);
+	SpriteManager_draw(engine->spriteManager, engine->window, 0);	
+	TextManager_draw(engine->textManager, engine->window, 0);
+  SpriteManager_draw(engine->spriteManager, engine->window, 1);  
+  TextManager_draw(engine->textManager, engine->window, 1);
+  
 
 	sfRenderWindow_display(engine->window);
 }

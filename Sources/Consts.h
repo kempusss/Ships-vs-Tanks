@@ -13,12 +13,11 @@
 #define MAP_HEIGHT 11
 #define FONT_PATH "Assets/arial.ttf"
 #define M_PI 3.14159265359f
-#define TURRET_SCALE 1.f
-#define ENEMY_SCALE 0.75f
 #define PROJECTILE_SCALE 1.f
 #define PROJECTILE_DESTROY_DISTANCE 30.f
-#define SHIP_SPAWN_WAIT 0.9f
+#define SHIP_SPAWN_WAIT 1.5f
 #define KILL_GOLD 5
+#define MAX_LVL 3
 
 /*
 #define TURRET1_KEY sfKeyNum1

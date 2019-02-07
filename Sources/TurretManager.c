@@ -5,10 +5,12 @@
 #include <stdlib.h>
 #include <math.h>
 
-static const int dmg[3] = {15,24,32};
-static const float reloadTime[3] = {0.5f, 0.75f,1.f};
+static const int dmg[3][3] = {{15,20,25},{24,30,36},{32,40,48}};
+static const float reloadTime[3][3] = {{0.5f,0.4f, 0.3f}, {0.75f, 0.7f, 0.65f},{1.f, 0.97f, 0.95f}};
 static const float range[3] = {200.f,300.f,400.f};
-static const int cost[3] = {20,25,30};
+static const int cost[3][3] = {{20,21,23},{25,26,28},{30,31,33}};
+
+
 
 
 TurretManager* TurretManager_create()
@@ -32,18 +34,17 @@ TurretNode* TurretManager_createNode(TurretManager* manager, SpriteManager* spri
 	newNode->sprite = spriteNode->data;
 	newNode->spriteId = spriteNode->id;
 	newNode->range = range[type];
-	newNode->dmg = dmg[type];
-	newNode->reloadTime = newNode->timeToShot = reloadTime[type];
+	newNode->dmg = dmg[type][0];
+	newNode->reloadTime = newNode->timeToShot = reloadTime[type][0];
 	newNode->type = type;
+	newNode->value = cost[type][0];
+	newNode->lvl = 1;
 
 	sfSprite_setTexture(newNode->sprite, TextureManager_getTexture(texMan, TANKS), sfTrue);
 
 	sfIntRect texturePosition = {0,type*TILE_SIZE, TILE_SIZE, TILE_SIZE};
 	sfSprite_setTextureRect(newNode->sprite, texturePosition);
 	centerSpriteOrigin(newNode->sprite);
-
-	sfVector2f scale = {TURRET_SCALE, TURRET_SCALE};
-	sfSprite_setScale(newNode->sprite, scale);
 
 	sfVector2f position = {3.5f*TILE_SIZE, 4.5f*TILE_SIZE};
 	sfSprite_setPosition(newNode->sprite, position);
@@ -207,7 +208,17 @@ void TurretManager_destroy(TurretManager* manager, SpriteManager* spriteMan)
 }
 
 
-int getTurretCost(int type)
+int getTurretCost(int type, int lvl)
 {
-	return cost[type];
+	return cost[type][lvl-1];
+}
+
+void upgradeTurret(TurretNode* node)
+{
+	int type = node->type;
+	int lvl = node->lvl;
+	node->value += cost[type][lvl];
+	node->dmg = dmg[type][lvl];
+	node->reloadTime = reloadTime[type][lvl];
+	node->lvl++;
 }

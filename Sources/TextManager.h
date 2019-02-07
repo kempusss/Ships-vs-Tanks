@@ -6,6 +6,7 @@
 typedef struct _TextNode
 {
 	int id;
+	int layer;
 	sfText* data;
 	struct _TextNode *next, *prev;
 } TextNode;
@@ -23,7 +24,7 @@ TextNode* TextManager_getNode(TextManager* manager, int id);
 TextNode* TextManager_getNodeContaining(TextManager*manager, int x, int y);
 
 
-void TextManager_draw(TextManager* manager, sfRenderWindow* window);
+void TextManager_draw(TextManager* manager, sfRenderWindow* window, int layer);
 
 void TextManager_destroyNode(TextManager* manager, int id);
 void TextManager_destroy(TextManager*);

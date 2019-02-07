@@ -19,6 +19,8 @@ TextNode*  TextManager_createNode(TextManager* manager)
 	newNode->data = sfText_create();
 	newNode->next = NULL;
 	newNode->id = manager->idCounter++;
+	newNode->layer = 0;
+
 
 	if(manager->listBegin == NULL)
 	{
@@ -39,6 +41,8 @@ TextNode*  TextManager_createNode(TextManager* manager)
 TextNode* TextManager_getNode(TextManager* manager, int id)
 {
 	TextNode* node = manager->listBegin;
+	if(id < 0)
+		return NULL;
 
 	while(node!= NULL)
 	{
@@ -73,12 +77,13 @@ TextNode*  TextManager_getNodeContaining(TextManager*manager, int x, int y)
 }
 
 
-void TextManager_draw(TextManager* manager, sfRenderWindow* window)
+void TextManager_draw(TextManager* manager, sfRenderWindow* window, int layer)
 {
 	TextNode* node = manager->listBegin;
 
 	while(node != NULL)
 	{
+		if(node->layer == layer)
 		sfRenderWindow_drawText(window, node->data, NULL);
 		node = node->next;
 	}

@@ -25,7 +25,7 @@ void WaveManager_loadFromFile(WaveManager* manager, const char* filePath)
 	if(data == NULL)
 	{
 		printf("wave file path is incorrect\n");
-		return;
+		exit(1);
 	}
 
 	if(!fscanf(data, "%d", &manager->shipPassesLeft))

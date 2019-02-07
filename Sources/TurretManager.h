@@ -14,6 +14,8 @@ typedef struct _TurretNode
 	int dmg;
 	float reloadTime;
 	float timeToShot;
+	int value;
+	int lvl;
 
 	sfSprite* sprite;
 	int spriteId;
@@ -39,5 +41,6 @@ void TurretManager_destroyNode(TurretManager* manager, int id,SpriteManager* spr
 void TurretManager_destroyAllNodes(TurretManager* manager, SpriteManager* spriteMan);
 void TurretManager_destroy(TurretManager*manager, SpriteManager* spriteMan);
 
-int getTurretCost(int type);
+int getTurretCost(int type, int lvl);
+void upgradeTurret(TurretNode* node);
 #endif

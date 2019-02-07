@@ -51,6 +51,9 @@ typedef struct _Engine
 	bool wasRightMouseButtonPressed;
 	bool wasLeftMouseButtonPressed;
 
+	char* mapPath;
+	char* wavePath;
+
 } Engine;
 
 Engine* Engine_create();

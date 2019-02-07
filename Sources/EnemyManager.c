@@ -4,8 +4,8 @@
 #include <stdlib.h>
 
 
-static const int maxHp[3] = {75, 110, 175};
-static const int speed[3] = {100, 75, 50};
+static const int maxHp[3] = {110, 75, 175};
+static const int speed[3] = {75, 100, 50};
 
 EnemyManager* EnemyManager_create()
 {
@@ -29,9 +29,6 @@ EnemyNode*  EnemyManager_createNode(EnemyManager* manager, SpriteManager* sprite
 	newNode->spriteId = spriteNode->id;
 	newNode->maxHp = newNode->currentHp = maxHp[type];
 	newNode->speed = speed[type];
-
-	sfVector2f scale ={ENEMY_SCALE, ENEMY_SCALE};
-	sfSprite_setScale(newNode->sprite, scale);
 
 	sfSprite_setTexture(newNode->sprite, TextureManager_getTexture(texMan, SHIPS), sfTrue);
 	sfIntRect texturePosition = {0,type*TILE_SIZE*2,TILE_SIZE,TILE_SIZE*2};

@@ -8,6 +8,7 @@ typedef struct _SpriteNode
 {
 	int id;
 	bool canContain;
+	int layer;
 	sfSprite* data;
 	struct _SpriteNode *next, *prev;
 } SpriteNode;
@@ -24,7 +25,7 @@ SpriteNode* SpriteManager_createNode(SpriteManager* manager);
 SpriteNode* SpriteManager_getNodeContaining(SpriteManager* manager, int x, int y);
 SpriteNode* SpriteManager_getNode(SpriteManager* manager, int id);
 
-void SpriteManager_draw(SpriteManager* manager, sfRenderWindow* window);
+void SpriteManager_draw(SpriteManager* manager, sfRenderWindow* window, int layer);
 
 void SpriteManager_destroyNode(SpriteManager* manager, int id);
 void SpriteManager_destroy(SpriteManager*);
