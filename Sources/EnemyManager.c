@@ -4,8 +4,8 @@
 #include <stdlib.h>
 
 
-static const int maxHp[3] = {110, 75, 175};
-static const int speed[3] = {75, 100, 50};
+static const int maxHp[3] = {28, 15, 40};
+static const int speed[3] = {75, 125, 50};
 
 EnemyManager* EnemyManager_create()
 {

@@ -22,6 +22,7 @@ typedef enum
 	STATE_COUNT
 } State;
 
+
 typedef struct _Engine
 {
 	int isActive;
@@ -32,7 +33,6 @@ typedef struct _Engine
 	TextureManager* textureManager;
 	SpriteManager* spriteManager;
 	TextManager* textManager;
-
 
 	EnemyManager* enemyManager;
 	TurretManager* turretManager;

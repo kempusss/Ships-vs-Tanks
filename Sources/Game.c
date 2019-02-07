@@ -406,9 +406,9 @@ static void manageUpgradingTurrets(Engine* engine)
 	if(node != NULL)
 	{
 		int type = node->type;
-		if(node->lvl != MAX_LVL && engine->waveManager->currentGold >= getTurretCost(type,node->lvl))
+		if(node->lvl != MAX_LVL && engine->waveManager->currentGold >= getTurretCost(type,node->lvl+1))
 		{
-			engine->waveManager->currentGold -= getTurretCost(type, node->lvl);
+			engine->waveManager->currentGold -= getTurretCost(type, node->lvl+1);
 			upgradeTurret(node);
 		}
 	}

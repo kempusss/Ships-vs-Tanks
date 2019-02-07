@@ -26,6 +26,7 @@ void MainMenu_update(Engine* engine)
 		if(node != NULL)
 		{
 			int id = node->id;
+
 			printf("clicked on text with id = %d\n", id);
 			if(id == engine->sceneInfo[LVL1_BUTTON])
 			{

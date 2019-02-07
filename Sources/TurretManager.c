@@ -5,10 +5,10 @@
 #include <stdlib.h>
 #include <math.h>
 
-static const int dmg[3][3] = {{15,20,25},{24,30,36},{32,40,48}};
-static const float reloadTime[3][3] = {{0.5f,0.4f, 0.3f}, {0.75f, 0.7f, 0.65f},{1.f, 0.97f, 0.95f}};
+static const int dmg[3][3] = {{2,2,3},{3,3,4},{3,4,5}};
+static const float reloadTime[3][3] = {{0.7f,0.6f, 0.5f}, {0.75f, 0.7f, 0.65f},{1.f, 0.97f, 0.95f}};
 static const float range[3] = {200.f,300.f,400.f};
-static const int cost[3][3] = {{20,21,23},{25,26,28},{30,31,33}};
+static int cost[3][3] = {{20,10,15},{21,12,17},{23,14,14}};
 
 
 
@@ -220,5 +220,6 @@ void upgradeTurret(TurretNode* node)
 	node->value += cost[type][lvl];
 	node->dmg = dmg[type][lvl];
 	node->reloadTime = reloadTime[type][lvl];
+	cost[type][lvl] +=2;
 	node->lvl++;
 }

@@ -15,16 +15,9 @@
 #define M_PI 3.14159265359f
 #define PROJECTILE_SCALE 1.f
 #define PROJECTILE_DESTROY_DISTANCE 30.f
-#define SHIP_SPAWN_WAIT 1.5f
-#define KILL_GOLD 5
+#define SHIP_SPAWN_WAIT 1.0f
+#define KILL_GOLD 2
 #define MAX_LVL 3
 
-/*
-#define TURRET1_KEY sfKeyNum1
-#define TURRET2_KEY sfKeyNum2
-#define TURRET3_KEY	sfKeyNum3
-#define SELL_KEY	sfKeyQ
-#define UPGRADE_KEY	sfKeyW
-#define CHECK_KEY	sfKeyE*/
 
 #endif

@@ -12,8 +12,8 @@
 Engine* Engine_create()
 {
 
-	printf("Initliazing engine\n");
-	srand(1111);
+  printf("Initliazing engine\n");
+  srand(1111);
 	Engine* eng = malloc(sizeof(Engine));
 
 	//init states
@@ -24,20 +24,24 @@ Engine* Engine_create()
   eng->mapPath = eng->wavePath = "";
 
   	/* Create the main window */
- 	sfVideoMode mode = {
+    sfVideoMode mode = {
    		WINDOW_WIDTH,
     	WINDOW_HEIGHT,
     	32
   	};
-  	sfContextSettings settings ={0,0,8,2,0,0,sfFalse};
-  	eng->windowsSettings = settings;
- 	eng->window = sfRenderWindow_create(mode, "piraci", sfClose, &(eng->windowsSettings));
- 	//eng->window = sfRenderWindow_create(mode, "piraci", sfClose, NULL);
+    
+    sfContextSettings settings ={0,0,8,2,0,0,sfFalse};
+    eng->windowsSettings = settings;
+    eng->window = sfRenderWindow_create(mode, "SHIPS VS TANKS", sfClose, &(eng->windowsSettings));
+
   	if (!eng->window)
   	{
   		printf("window creation error\n");
   		return NULL; 
   	}
+
+  
+
   	sfRenderWindow_setFramerateLimit(eng->window, FRAME_RATE);
   	sfRenderWindow_setKeyRepeatEnabled(eng->window, false);
 
